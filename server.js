@@ -18,7 +18,15 @@ app.get("/", (req, res) => {
         } else if (city !== "" && !cities.includes(city)) {
           res.send("This city is not supported");
         } else {
-          res.send("Please support Gurjaani");
+          let weatherArr = [];
+          for (let i = 0; i < cities.length; i++) {
+            city = cities[i];
+            console.log(city);
+            weatherArr.push(
+              `The weather in "${city}" is ${data.weather[0].description}.`
+            );
+          }
+          return res.send(weatherArr.join("<br>"));
         }
       }
     }
