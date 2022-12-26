@@ -1,2 +1,1 @@
-exports.cities = ["Tbilisi", "Batumi", "Kutaisi", "Rustavi", "Borjomi"];
-
+exports.cities = ['Tbilisi', 'Batumi', 'Kutaisi', 'Rustavi', 'Borjomi']
