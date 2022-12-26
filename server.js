@@ -1,6 +1,8 @@
 const express = require("express");
 const request = require("request");
 const dotenv = require("dotenv");
+const data = require("./data");
+const cities = data.cities;
 
 
 // defining environment variables
@@ -9,13 +11,12 @@ dotenv.config({
 });
 
 // constants
-const PORT = process.env.PORT
-const SECRET_KEY = process.env.SECRET_KEY
+const PORT = process.env.PORT;
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const app = express();
 
 app.get("/", (req, res) => {
-  let cities = ["Tbilisi", "Batumi", "Kutaisi", "Rustavi", "Borjomi"];
   let city = req.query.city;
   request(
     `https://api.openweathermap.org/data/2.5/weather?q=${city},+995&appid=${SECRET_KEY}`,
