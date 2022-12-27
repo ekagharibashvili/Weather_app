@@ -1,15 +1,8 @@
 const citiesData = require('../data')
 const cities = citiesData.cities
 const fetch = require('node-fetch')
-const dotenv = require('dotenv')
-dotenv.config({
-  path: './config.env'
-})
-const SECRET_KEY = process.env.SECRET_KEY
-// fetchUrls
-const urls = cities.map((city) => {
-  return `https://api.openweathermap.org/data/2.5/weather?q=${city},+995&appid=${SECRET_KEY}`
-})
+const { returnOneUrl } = require('../utils/urls')
+const { returnManyUrl } = require('../utils/urls')
 
 exports.getWeather = async (req, res) => {
   try {
@@ -17,9 +10,7 @@ exports.getWeather = async (req, res) => {
     const isIncluded = cities.includes(city)
     // retrieve weather for one, supported city
     if (isIncluded) {
-      const weather = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${city},+995&appid=${SECRET_KEY}`
-      )
+      const weather = await fetch(returnOneUrl(city))
       const data = await weather.json()
       res.status(200).json({
         status: 'OK',
@@ -33,7 +24,7 @@ exports.getWeather = async (req, res) => {
       })
       // retrieve weather of every city from array
     } else {
-      const responsePromises = urls.map((url) => {
+      const responsePromises = returnManyUrl.map((url) => {
         return fetch(url)
       })
       const responses = await Promise.all(responsePromises)
